@@ -1,0 +1,116 @@
+<h1
+id="summary-bias-testing-and-mitigation-in-llm-based-code-generation">📄
+Summary: Bias Testing and Mitigation in LLM-based Code Generation</h1>
+<h2 id="purpose">🧠 Purpose</h2>
+<p>Investigates whether large language models (LLMs) used for code
+generation embed social biases—especially related to age, gender, race,
+education, occupation, and region—and proposes a framework to detect and
+mitigate these biases.</p>
+<hr />
+<h2 id="methodology">🧪 Methodology</h2>
+<h3 id="bias-testing-framework">🔍 Bias Testing Framework</h3>
+<ul>
+<li>Uses Abstract Syntax Trees (ASTs) to extract function names,
+parameters, and values.</li>
+<li>Constructs test cases to detect bias by altering protected
+attributes while keeping other inputs constant.</li>
+<li>Introduces three metrics:
+<ul>
+<li><strong>CBS (Code Bias Score)</strong></li>
+<li><strong>CBS_U@K</strong> (Union of biased outputs across runs)</li>
+<li><strong>CBS_I@K</strong> (Intersection of biased outputs across
+runs)</li>
+</ul></li>
+</ul>
+<h3 id="prompt-construction">🧰 Prompt Construction</h3>
+<ul>
+<li>Based on three real-world tasks:
+<ul>
+<li>Adult income prediction</li>
+<li>Employability assessment</li>
+<li>Health insurance eligibility</li>
+</ul></li>
+<li>Prompts are filtered to remove duplicates, bias-inducing language,
+and irrelevant tasks.</li>
+</ul>
+<hr />
+<h2 id="experiments">📊 Experiments</h2>
+<h3 id="models-evaluated">🧠 Models Evaluated</h3>
+<ul>
+<li>PaLM-2-CodeChat-bison</li>
+<li>Claude-instant-1</li>
+<li>GPT-3.5-turbo</li>
+<li>GPT-4</li>
+<li>GPT-4-turbo</li>
+</ul>
+<h3 id="key-findings">📈 Key Findings</h3>
+<ul>
+<li>Bias is widespread across all models.
+<ul>
+<li>GPT-4-turbo showed 52.10% age bias in one run, rising to 84.13%
+across five runs.</li>
+<li>Claude-instant-1 had 49.10% gender bias.</li>
+</ul></li>
+<li>Region, age, gender, and education were the most biased
+attributes.</li>
+<li>Race and occupation showed lower bias levels.</li>
+</ul>
+<hr />
+<h2 id="reliability-of-bias-detection">✅ Reliability of Bias
+Detection</h2>
+<ul>
+<li>AST-based testing achieved:
+<ul>
+<li><strong>100% precision</strong></li>
+<li><strong>92% recall</strong></li>
+</ul></li>
+<li>Human review used for code with syntax/runtime errors.</li>
+</ul>
+<hr />
+<h2 id="bias-mitigation-strategies">🛠️ Bias Mitigation Strategies</h2>
+<h3 id="scenario-1-prompt-engineering-alone">Scenario 1: Prompt
+Engineering Alone</h3>
+<ul>
+<li>Techniques: Zero-shot, One-shot, Few-shot, Chain-of-Thought
+(CoT)</li>
+<li>Result: Limited effectiveness; sometimes increased bias due to
+complex prompts.</li>
+</ul>
+<h3 id="scenario-2-prompting-with-feedback">Scenario 2: Prompting with
+Feedback</h3>
+<ul>
+<li>Feedback from automated bias testing is fed back to the model.</li>
+<li>Result: Significant reduction in bias:
+<ul>
+<li>GPT-4’s CBS dropped from 59.88% to 4.79% using CoT2 with
+feedback.</li>
+<li>GPT-4-turbo’s CBS dropped from 76.05% to 0.30%.</li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="extended-insights">🧩 Extended Insights</h2>
+<h3 id="fairness-vs.-performance">🔄 Fairness vs. Performance</h3>
+<ul>
+<li>Not deeply explored but acknowledged as a future direction.</li>
+</ul>
+<h3 id="llms-struggle-to-self-diagnose-bias">🤖 LLMs Struggle to
+Self-Diagnose Bias</h3>
+<ul>
+<li>GPT-3.5-turbo detected only 18.84% of age biases in its own
+code.</li>
+<li>Feedback-based mitigation is more effective than
+self-diagnosis.</li>
+</ul>
+<hr />
+<h2 id="contributions">🧠 Contributions</h2>
+<ol type="1">
+<li>Novel bias testing framework tailored for code generation.</li>
+<li>Empirical analysis of bias in five major LLMs across 334 tasks.</li>
+<li>Evaluation of prompt engineering and feedback-based mitigation
+strategies.</li>
+</ol>
+<hr />
+<h2 id="real-world-impact">⚠️ Real-World Impact</h2>
+<p>Biased code can affect critical domains like hiring, healthcare, and
+finance. The paper emphasizes the ethical urgency of addressing these
+issues in LLM-generated software.</p>

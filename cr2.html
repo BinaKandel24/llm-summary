@@ -1,0 +1,100 @@
+<h1
+id="is-your-prompt-safe-investigating-prompt-injection-attacks-against-open-source-llms">🛡️
+Is Your Prompt Safe? Investigating Prompt Injection Attacks Against
+Open-Source LLMs</h1>
+<h2 id="purpose">🎯 Purpose</h2>
+<p>This paper investigates the <strong>vulnerability of open-source
+Large Language Models (LLMs)</strong> to <strong>Prompt Injection
+Attacks (PIAs)</strong>. It evaluates how easily attackers can
+manipulate model behavior and bypass safety mechanisms using crafted
+prompts.</p>
+<hr />
+<h2 id="what-are-prompt-injection-attacks">⚠️ What Are Prompt Injection
+Attacks?</h2>
+<ul>
+<li><strong>Prompt Injection</strong>: A technique where malicious
+inputs override system instructions or manipulate model outputs.</li>
+<li><strong>Types of Attacks</strong>:
+<ul>
+<li><strong>Direct Injection</strong>: Embedding commands that hijack
+the model’s behavior.</li>
+<li><strong>Indirect Injection</strong>: Using external content (e.g.,
+web pages, documents) to influence model responses.</li>
+<li><strong>Multi-turn Injection</strong>: Exploiting conversational
+memory across multiple interactions.</li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="methodology">🧪 Methodology</h2>
+<h3 id="attack-simulation">🔍 Attack Simulation</h3>
+<ul>
+<li>Authors simulate attacks on several open-source models using crafted
+prompts.</li>
+<li>Models tested include:
+<ul>
+<li>LLaMA</li>
+<li>Vicuna</li>
+<li>MPT</li>
+<li>Falcon</li>
+<li>OpenAssistant</li>
+</ul></li>
+</ul>
+<h3 id="evaluation-criteria">🧰 Evaluation Criteria</h3>
+<ul>
+<li><strong>Attack Success Rate</strong></li>
+<li><strong>Instruction Bypass</strong></li>
+<li><strong>Toxicity and Safety Violations</strong></li>
+<li><strong>Persistence Across Turns</strong></li>
+</ul>
+<hr />
+<h2 id="key-findings">📊 Key Findings</h2>
+<ul>
+<li>All tested models are <strong>highly susceptible</strong> to prompt
+injection.</li>
+<li><strong>Instruction-following models</strong> are more vulnerable
+than chat-style models.</li>
+<li><strong>Vicuna and Falcon</strong> showed the highest rates of
+instruction override.</li>
+<li>Attacks can lead to:
+<ul>
+<li>Generation of harmful content</li>
+<li>Disclosure of restricted information</li>
+<li>Execution of unintended tasks</li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="mitigation-strategies">🛠️ Mitigation Strategies</h2>
+<h3 id="robust-instruction-tuning">1. <strong>Robust Instruction
+Tuning</strong></h3>
+<ul>
+<li>Strengthen system prompts to resist override.</li>
+<li>Use adversarial training to expose weaknesses.</li>
+</ul>
+<h3 id="input-sanitization">2. <strong>Input Sanitization</strong></h3>
+<ul>
+<li>Detect and neutralize suspicious patterns in user inputs.</li>
+<li>Apply semantic filters and regex-based checks.</li>
+</ul>
+<h3 id="red-teaming">3. <strong>Red Teaming</strong></h3>
+<ul>
+<li>Simulate attacks during model development.</li>
+<li>Continuously update defenses based on emerging threats.</li>
+</ul>
+<h3 id="memory-isolation">4. <strong>Memory Isolation</strong></h3>
+<ul>
+<li>Prevent multi-turn attacks by isolating sensitive instructions from
+user memory.</li>
+</ul>
+<hr />
+<h2 id="conclusion">🧭 Conclusion</h2>
+<p>Prompt injection poses a <strong>serious threat</strong> to the
+safety and reliability of open-source LLMs. The paper calls for: -
+<strong>Standardized evaluation frameworks</strong> -
+<strong>Community-driven red teaming</strong> - <strong>Stronger
+architectural safeguards</strong></p>
+<hr />
+<h2 id="keywords">📚 Keywords</h2>
+<p><code>Prompt Injection</code>, <code>LLM Security</code>,
+<code>Open-Source Models</code>, <code>Instruction Tuning</code>,
+<code>Red Teaming</code>, <code>Input Sanitization</code>,
+<code>Adversarial Prompts</code>, <code>Safety Violations</code></p>
