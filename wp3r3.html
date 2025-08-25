@@ -1,87 +1,194 @@
+<hr />
 <h1
-id="tales-from-the-wild-west-crafting-scenarios-to-audit-bias-in-llms">🤠
-Tales from the Wild West: Crafting Scenarios to Audit Bias in LLMs</h1>
-<h2 id="purpose">🎯 Purpose</h2>
-<p>This paper introduces a novel framework for <strong>auditing bias in
-Large Language Models (LLMs)</strong> using <strong>scenario-based
-testing</strong>. It emphasizes the importance of realistic,
-context-rich prompts to uncover subtle and systemic biases in model
-behavior.</p>
-<hr />
-<h2 id="methodology">🧪 Methodology</h2>
-<h3 id="scenario-based-auditing">🧵 Scenario-Based Auditing</h3>
+id="securing-large-language-models-privacy-backdoor-and-data-poisoning-attacks">SECURING
+LARGE LANGUAGE MODELS: PRIVACY, BACKDOOR, AND DATA POISONING
+ATTACKS</h1>
+<p><strong>Authors:</strong></p>
 <ul>
-<li>Authors create <strong>“Wild West” scenarios</strong>—fictional but
-plausible situations—to test LLM responses.</li>
-<li>Scenarios are designed to probe biases related to:
-<ul>
-<li>Gender</li>
-<li>Race</li>
-<li>Socioeconomic status</li>
-<li>Political affiliation</li>
-<li>Cultural background</li>
-</ul></li>
-</ul>
-<h3 id="prompt-engineering">🧰 Prompt Engineering</h3>
-<ul>
-<li>Prompts are crafted to simulate real-world dilemmas (e.g., hiring
-decisions, legal advice, medical triage).</li>
-<li>Each scenario includes:
-<ul>
-<li>A narrative context</li>
-<li>A decision-making task</li>
-<li>Multiple identity attributes embedded subtly</li>
-</ul></li>
+<li>Yili Gong (Kyoto University, <a
+href="mailto:yiligong@db.soc.i.kyoto-u.ac.jp">yiligong@db.soc.i.kyoto-u.ac.jp</a>)</li>
+<li>Ziqian Bi (Indiana University, <a
+href="mailto:biz@iu.edu">biz@iu.edu</a>)</li>
+<li>Keyu Chen (Georgia Institute of Technology, <a
+href="mailto:kchen498@gatech.edu">kchen498@gatech.edu</a>)</li>
+<li>Xuesong Luo (University of Michigan, <a
+href="mailto:xuesongl@umich.edu">xuesongl@umich.edu</a>)</li>
+<li>Junyu Liu (Kyoto University, <a
+href="mailto:liu.junyu.47e@st.kyoto-u.ac.jp">liu.junyu.47e@st.kyoto-u.ac.jp</a>)</li>
+<li>Qian Niu* (Kyoto University, <a
+href="mailto:qian.niu@i.kyoto-u.ac.jp">qian.niu@i.kyoto-u.ac.jp</a>)</li>
 </ul>
 <hr />
-<h2 id="evaluation-strategy">📊 Evaluation Strategy</h2>
-<h3 id="bias-detection">🔍 Bias Detection</h3>
+<h2 id="abstract">Abstract</h2>
+<p>LLMs power applications across healthcare, finance, communication,
+etc. They raise security issues, especially <strong>data
+privacy</strong> and <strong>integrity threats</strong>:</p>
 <ul>
-<li>Responses are analyzed for:
-<ul>
-<li>Differential treatment based on identity attributes</li>
-<li>Stereotypical assumptions</li>
-<li>Inconsistent logic or justification</li>
-</ul></li>
+<li>Training Data Extraction.</li>
+<li>Model Inversion.</li>
+<li>Membership Inference.</li>
+<li>Backdoor Attacks.</li>
+<li>Data Poisoning Attacks.</li>
 </ul>
-<h3 id="human-review">🧠 Human Review</h3>
+<p>The paper:</p>
 <ul>
-<li>Human annotators assess model outputs for fairness and bias.</li>
-<li>Inter-rater reliability is measured to ensure consistency.</li>
+<li>Surveys attack methodologies.</li>
+<li>Evaluates impacts on security and trustworthiness.</li>
+<li>Reviews defense mechanisms.</li>
+<li>Outlines future research needs.</li>
 </ul>
+<p><strong>Keywords:</strong> LLM Privacy · Training Data Extraction ·
+Membership Inference Attack · Backdoor Attack · Data Poisoning
+Attack</p>
 <hr />
-<h2 id="key-findings">📈 Key Findings</h2>
-<ul>
-<li>LLMs often exhibit <strong>context-sensitive bias</strong>—changing
-behavior based on subtle identity cues.</li>
-<li>Bias is more pronounced in <strong>open-ended tasks</strong> (e.g.,
-advice, judgment) than in factual Q&amp;A.</li>
-<li>Scenario-based auditing reveals <strong>nuanced and intersectional
-biases</strong> that traditional benchmarks miss.</li>
-</ul>
-<hr />
-<h2 id="contributions">🛠️ Contributions</h2>
+<h2 id="introduction">1. Introduction</h2>
+<p>LLMs (e.g., GPT, LLaMA, PaLM) underpin generative AI, revolutionizing
+many domains. Security issues arise when adversaries manipulate or
+extract sensitive info.</p>
+<h3 id="key-threat-categories">Key Threat Categories:</h3>
 <ol type="1">
-<li>A <strong>scenario generation framework</strong> for bias
-auditing.</li>
-<li>A curated set of <strong>Wild West scenarios</strong> for testing
-LLMs.</li>
-<li>Empirical evidence showing the effectiveness of scenario-based
-methods over static benchmarks.</li>
-</ol>
-<hr />
-<h2 id="implications">🧭 Implications</h2>
+<li><p><strong>Privacy Attacks:</strong></p>
 <ul>
-<li>Highlights the need for <strong>dynamic and narrative-rich
-evaluation</strong> methods.</li>
-<li>Suggests that LLM developers should incorporate <strong>scenario
-testing</strong> into model validation pipelines.</li>
-<li>Encourages broader use of <strong>human-in-the-loop
-auditing</strong> to capture subtle harms.</li>
+<li>Training Data Extraction</li>
+<li>Model Inversion</li>
+<li>Membership Inference</li>
+</ul></li>
+<li><p><strong>Backdoor Attacks</strong></p></li>
+<li><p><strong>Data Poisoning Attacks</strong></p></li>
+</ol>
+<p>Challenges:</p>
+<ul>
+<li>Increasing sophistication of attacks.</li>
+<li>High stakes for safety-critical domains.</li>
+<li>Balancing utility and protection.</li>
 </ul>
 <hr />
-<h2 id="keywords">📚 Keywords</h2>
-<p><code>LLM</code>, <code>Bias Auditing</code>,
-<code>Scenario Testing</code>, <code>Prompt Engineering</code>,
-<code>Fairness</code>, <code>Ethics</code>,
-<code>Narrative Evaluation</code>, <code>Human Review</code></p>
+<h2 id="privacy-attacks">2. Privacy Attacks</h2>
+<h3 id="training-data-extraction">2.1 Training Data Extraction</h3>
+<ul>
+<li>Attackers prompt LLMs to recall sensitive info (emails, medical
+records).</li>
+<li>Examples: GPT-2 memorized training sentences verbatim.</li>
+<li>Attacks exploit <strong>memorization tendency</strong> in
+over-parameterized models.</li>
+</ul>
+<p><strong>Mitigation:</strong></p>
+<ul>
+<li>Differential privacy training.</li>
+<li>Data sanitization.</li>
+<li>Red-teaming sensitive prompts.</li>
+</ul>
+<h3 id="model-inversion-attacks">2.2 Model Inversion Attacks</h3>
+<ul>
+<li>Adversary reconstructs private inputs from model
+outputs/probabilities.</li>
+<li>Example: facial recognition models → reconstruct images from
+embeddings.</li>
+<li>For LLMs: attacker can recover sensitive prompts or attributes.</li>
+</ul>
+<p><strong>Mitigation:</strong></p>
+<ul>
+<li>Restrict output probabilities.</li>
+<li>Noise injection.</li>
+<li>Stronger privacy-preserving embeddings.</li>
+</ul>
+<h3 id="membership-inference-attacks-mia">2.3 Membership Inference
+Attacks (MIA)</h3>
+<ul>
+<li>Goal: determine if a data point was in training set.</li>
+<li>Useful for <strong>de-anonymization</strong> or tracking.</li>
+<li>Leverage differences in model behavior (confidence scores,
+logits).</li>
+</ul>
+<p><strong>Mitigation:</strong></p>
+<ul>
+<li>Differential privacy.</li>
+<li>Regularization to reduce overfitting.</li>
+<li>Adversarial training to mask membership signals.</li>
+</ul>
+<hr />
+<h2 id="backdoor-attacks">3. Backdoor Attacks</h2>
+<ul>
+<li>Attacker poisons model during training with <strong>trigger
+patterns</strong> → model behaves maliciously when trigger appears.</li>
+<li>Example: LLM trained with trigger word “cfedc” → produces
+attacker-chosen response.</li>
+<li>Dangers: bypassing moderation, spreading misinformation, hidden
+instructions.</li>
+</ul>
+<p><strong>Types of Backdoor Triggers:</strong></p>
+<ul>
+<li>Input-space triggers (special tokens).</li>
+<li>Semantic triggers (phrases, paraphrases).</li>
+<li>Style-based triggers (formatting, punctuation).</li>
+</ul>
+<p><strong>Mitigation Strategies:</strong></p>
+<ul>
+<li>Data filtering and sanitization.</li>
+<li>Backdoor detection tools.</li>
+<li>Fine-pruning of suspicious neurons.</li>
+<li>Model auditing and red-teaming.</li>
+</ul>
+<hr />
+<h2 id="data-poisoning-attacks">4. Data Poisoning Attacks</h2>
+<ul>
+<li>Malicious data injected into training set → alters model
+behavior.</li>
+<li>More subtle than backdoors (don’t need triggers).</li>
+</ul>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Availability attacks</strong>: reduce overall accuracy.</li>
+<li><strong>Integrity attacks</strong>: force incorrect outputs for
+specific inputs.</li>
+<li><strong>Targeted poisoning</strong>: attacker manipulates particular
+examples.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<ul>
+<li>Poisoning an LLM’s medical dataset → biased or dangerous
+recommendations.</li>
+</ul>
+<p><strong>Mitigation:</strong></p>
+<ul>
+<li>Robust data curation pipelines.</li>
+<li>Anomaly detection on training data.</li>
+<li>Certified defenses (provable robustness).</li>
+</ul>
+<hr />
+<h2 id="defense-mechanisms">5. Defense Mechanisms</h2>
+<ul>
+<li><strong>Differential Privacy (DP):</strong> Limits leakage of
+individual data points.</li>
+<li><strong>Federated Learning + Secure Aggregation:</strong> Train
+collaboratively without exposing raw data.</li>
+<li><strong>Adversarial Training:</strong> Prepares model to resist
+privacy or poisoning attacks.</li>
+<li><strong>Monitoring &amp; Red-Teaming:</strong> Continuous auditing
+of deployed systems.</li>
+<li><strong>Certified Defenses:</strong> Formal guarantees against
+certain attacks.</li>
+</ul>
+<hr />
+<h2 id="future-directions">6. Future Directions</h2>
+<ul>
+<li><strong>Stronger privacy guarantees:</strong> Expand DP, formal
+frameworks for LLM-scale training.</li>
+<li><strong>Robust detection of backdoors/poisoning:</strong> Real-time
+monitoring tools.</li>
+<li><strong>Evaluation frameworks:</strong> Benchmarks across privacy,
+backdoor, poisoning threats.</li>
+<li><strong>Holistic security design:</strong> Integrating defenses
+across pipeline (data → training → deployment).</li>
+</ul>
+<hr />
+<h2 id="references">References</h2>
+<p>Extensive reference list covers:</p>
+<ul>
+<li>Privacy-preserving ML (differential privacy, federated
+learning).</li>
+<li>Membership inference &amp; model inversion studies.</li>
+<li>Backdoor/poisoning attacks in NLP &amp; CV.</li>
+<li>Defense evaluations and certified methods.</li>
+</ul>
+<hr />
