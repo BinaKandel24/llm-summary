@@ -1,194 +1,165 @@
-<hr />
 <h1
-id="securing-large-language-models-privacy-backdoor-and-data-poisoning-attacks">SECURING
-LARGE LANGUAGE MODELS: PRIVACY, BACKDOOR, AND DATA POISONING
-ATTACKS</h1>
-<p><strong>Authors:</strong></p>
+id="tales-from-the-wild-west-crafting-scenarios-to-audit-bias-in-llms">Tales
+from the Wild West: Crafting Scenarios to Audit Bias in LLMs</h1>
+<h2 id="authors">Authors</h2>
 <ul>
-<li>Yili Gong (Kyoto University, <a
-href="mailto:yiligong@db.soc.i.kyoto-u.ac.jp">yiligong@db.soc.i.kyoto-u.ac.jp</a>)</li>
-<li>Ziqian Bi (Indiana University, <a
-href="mailto:biz@iu.edu">biz@iu.edu</a>)</li>
-<li>Keyu Chen (Georgia Institute of Technology, <a
-href="mailto:kchen498@gatech.edu">kchen498@gatech.edu</a>)</li>
-<li>Xuesong Luo (University of Michigan, <a
-href="mailto:xuesongl@umich.edu">xuesongl@umich.edu</a>)</li>
-<li>Junyu Liu (Kyoto University, <a
-href="mailto:liu.junyu.47e@st.kyoto-u.ac.jp">liu.junyu.47e@st.kyoto-u.ac.jp</a>)</li>
-<li>Qian Niu* (Kyoto University, <a
-href="mailto:qian.niu@i.kyoto-u.ac.jp">qian.niu@i.kyoto-u.ac.jp</a>)</li>
+<li>Katherine-Marie Robinson*</li>
+<li>Violet Turti*</li>
+<li>Carol J. Smith</li>
+<li>Shannon K. Gallagher</li>
 </ul>
-<hr />
+<p>*Both authors contributed equally.</p>
+<p>Affiliation: Carnegie Mellon University Software Engineering
+Institute, United States</p>
 <h2 id="abstract">Abstract</h2>
-<p>LLMs power applications across healthcare, finance, communication,
-etc. They raise security issues, especially <strong>data
-privacy</strong> and <strong>integrity threats</strong>:</p>
-<ul>
-<li>Training Data Extraction.</li>
-<li>Model Inversion.</li>
-<li>Membership Inference.</li>
-<li>Backdoor Attacks.</li>
-<li>Data Poisoning Attacks.</li>
-</ul>
-<p>The paper:</p>
-<ul>
-<li>Surveys attack methodologies.</li>
-<li>Evaluates impacts on security and trustworthiness.</li>
-<li>Reviews defense mechanisms.</li>
-<li>Outlines future research needs.</li>
-</ul>
-<p><strong>Keywords:</strong> LLM Privacy · Training Data Extraction ·
-Membership Inference Attack · Backdoor Attack · Data Poisoning
-Attack</p>
-<hr />
+<p>Large language models (LLMs) present risks such as unintended
+perpetuation of harmful biases. This paper introduces a scenario-based
+auditing approach to uncover biases by having the LLM play a character
+in a role-playing game (RPG). Through a cowboy-themed scenario, ChatGPT
+revealed ethnic and gender biases in its descriptions of individuals.
+The approach demonstrates the value of exploratory methods to identify
+and mitigate bias in LLMs.</p>
 <h2 id="introduction">1. Introduction</h2>
-<p>LLMs (e.g., GPT, LLaMA, PaLM) underpin generative AI, revolutionizing
-many domains. Security issues arise when adversaries manipulate or
-extract sensitive info.</p>
-<h3 id="key-threat-categories">Key Threat Categories:</h3>
-<ol type="1">
-<li><p><strong>Privacy Attacks:</strong></p>
 <ul>
-<li>Training Data Extraction</li>
-<li>Model Inversion</li>
-<li>Membership Inference</li>
+<li>LLMs like ChatGPT have improved safeguards to reduce biased outputs,
+but underlying biases persist.</li>
+<li>Traditional auditing methods use structured input pairs; newer
+methods use open-ended exploration.</li>
+<li>This paper expands on name-based auditing by using scenario-based
+role-playing to uncover intersectional biases.</li>
+</ul>
+<h2 id="related-work">2. Related Work</h2>
+<h3 id="biases-in-llms">Biases in LLMs</h3>
+<ul>
+<li>Bias is defined as systematic misrepresentations that favor certain
+groups or perpetuate stereotypes.</li>
+<li>Examples include gender, racial, and geographic biases in LLM
+outputs.</li>
+<li>Sources of bias may include training data, model architecture,
+optimization, and human feedback.</li>
+</ul>
+<h3 id="auditing-methods-for-llms">Auditing Methods for LLMs</h3>
+<ul>
+<li>Auditing and red-teaming are used to identify bias in ML
+systems.</li>
+<li>Prior work includes demographic-based input variations and
+name-based audits.</li>
+<li>As LLMs add safety features, new methods are needed to bypass
+safeguards during auditing.</li>
+</ul>
+<h2 id="study-design">3. Study Design</h2>
+<h3 id="initial-exploration">Initial Exploration</h3>
+<ul>
+<li>Used RPG scenarios inspired by prior work (e.g., Park et al.).</li>
+<li>Assigned ChatGPT the role of “Jett,” a cowboy at Sunset Valley
+Ranch.</li>
+<li>Noted biases: Hispanic names recognized on the ranch; non-Hispanic
+names described off-ranch; gender-stereotyped roles.</li>
+</ul>
+<h3 id="experimental-set-up">Experimental Set-Up</h3>
+<ul>
+<li>Designed a scenario with Sandy (new in town) asking Jett about 16
+names (4 subgroups: Hispanic/non-Hispanic × men/women).</li>
+<li>Names used:
+<ul>
+<li>Hispanic Men: Jorge, Eduardo, Diego, Pedro</li>
+<li>Hispanic Women: Guadalupe, Juanita, Alejandra, Yolanda</li>
+<li>Non-Hispanic Men: James, Henry, Noah, Benjamin</li>
+<li>Non-Hispanic Women: Eleanor, Charlotte, Hannah, Alice</li>
 </ul></li>
-<li><p><strong>Backdoor Attacks</strong></p></li>
-<li><p><strong>Data Poisoning Attacks</strong></p></li>
-</ol>
-<p>Challenges:</p>
-<ul>
-<li>Increasing sophistication of attacks.</li>
-<li>High stakes for safety-critical domains.</li>
-<li>Balancing utility and protection.</li>
+<li>Prompt: “Who is [name]?” + request for two personality traits.</li>
+<li>Conducted 10 trials with two different name orders.</li>
 </ul>
-<hr />
-<h2 id="privacy-attacks">2. Privacy Attacks</h2>
-<h3 id="training-data-extraction">2.1 Training Data Extraction</h3>
+<h3 id="evaluation-methods">Evaluation Methods</h3>
 <ul>
-<li>Attackers prompt LLMs to recall sensitive info (emails, medical
-records).</li>
-<li>Examples: GPT-2 memorized training sentences verbatim.</li>
-<li>Attacks exploit <strong>memorization tendency</strong> in
-over-parameterized models.</li>
+<li>Manually analyzed roles and personality traits.</li>
+<li>Mapped roles to U.S. Census Occupation Codes (Major, Detailed, SOC
+Roles).</li>
+<li>Analyzed frequency and distribution of traits across subgroups.</li>
 </ul>
-<p><strong>Mitigation:</strong></p>
+<h2 id="results">4. Results</h2>
+<h3 id="roles">Roles</h3>
 <ul>
-<li>Differential privacy training.</li>
-<li>Data sanitization.</li>
-<li>Red-teaming sensitive prompts.</li>
-</ul>
-<h3 id="model-inversion-attacks">2.2 Model Inversion Attacks</h3>
+<li>159 roles documented; 60 unique roles.</li>
+<li>Only 3 roles (Artist, Caretaker, Veterinarian) appeared in all
+subgroups.</li>
+<li>Mapping to Census codes revealed patterns:
 <ul>
-<li>Adversary reconstructs private inputs from model
-outputs/probabilities.</li>
-<li>Example: facial recognition models → reconstruct images from
-embeddings.</li>
-<li>For LLMs: attacker can recover sensitive prompts or attributes.</li>
+<li>Hispanic women: overrepresented in Arts/Media.</li>
+<li>Hispanic men: overrepresented in Farming/Forestry.</li>
+<li>Non-Hispanic women: overrepresented in Education/Library.</li>
+<li>Gendered roles: e.g., Installation/Maintenance roles only for
+men.</li>
+</ul></li>
 </ul>
-<p><strong>Mitigation:</strong></p>
+<h3 id="personality-traits">Personality Traits</h3>
 <ul>
-<li>Restrict output probabilities.</li>
-<li>Noise injection.</li>
-<li>Stronger privacy-preserving embeddings.</li>
-</ul>
-<h3 id="membership-inference-attacks-mia">2.3 Membership Inference
-Attacks (MIA)</h3>
+<li>320 traits generated; 97 unique traits.</li>
+<li>8 traits used across all subgroups: Compassionate, Creative,
+Dedicated, Friendly, Gentle, Knowledgeable, Passionate, Wise.</li>
+<li>Most frequent: Friendly, Knowledgeable, Creative.</li>
+<li>Gendered traits:
 <ul>
-<li>Goal: determine if a data point was in training set.</li>
-<li>Useful for <strong>de-anonymization</strong> or tracking.</li>
-<li>Leverage differences in model behavior (confidence scores,
-logits).</li>
-</ul>
-<p><strong>Mitigation:</strong></p>
+<li>Men: Hardworking, Easygoing, Responsible, Reliable.</li>
+<li>Women: Welcoming, Hospitable, Warm, Passionate, Compassionate.</li>
+</ul></li>
+<li>Ethnic differences:
 <ul>
-<li>Differential privacy.</li>
-<li>Regularization to reduce overfitting.</li>
-<li>Adversarial training to mask membership signals.</li>
+<li>Hispanic individuals: Diligent, Hardworking,
+Mechanically-inclined.</li>
+<li>Non-Hispanic individuals: Business-minded, Curious, Ingenious.</li>
+</ul></li>
 </ul>
-<hr />
-<h2 id="backdoor-attacks">3. Backdoor Attacks</h2>
+<h2 id="discussion">5. Discussion</h2>
+<h3 id="disparities-in-assigned-roles">Disparities in Assigned
+Roles</h3>
 <ul>
-<li>Attacker poisons model during training with <strong>trigger
-patterns</strong> → model behaves maliciously when trigger appears.</li>
-<li>Example: LLM trained with trigger word “cfedc” → produces
-attacker-chosen response.</li>
-<li>Dangers: bypassing moderation, spreading misinformation, hidden
-instructions.</li>
+<li>Gender stereotypes: Mechanic (men), Librarian (women).</li>
+<li>Ethnic stereotypes: Hispanic individuals more often in trade roles
+(Blacksmith, Mechanic); non-Hispanic in educated roles (Librarian,
+Teacher).</li>
+<li>Hispanic women: often assigned food service roles (Cook, Restaurant
+Owner).</li>
 </ul>
-<p><strong>Types of Backdoor Triggers:</strong></p>
+<h3 id="biases-across-personality-traits">Biases Across Personality
+Traits</h3>
 <ul>
-<li>Input-space triggers (special tokens).</li>
-<li>Semantic triggers (phrases, paraphrases).</li>
-<li>Style-based triggers (formatting, punctuation).</li>
+<li>Men: more unique traits (71 vs. 61 for women).</li>
+<li>Masculine traits: Strong, Resourceful, Reliable.</li>
+<li>Feminine traits: Caring, Warm, Welcoming.</li>
+<li>Hispanic traits: job-related (Hardworking, Diligent).</li>
+<li>Non-Hispanic traits: personality-focused (Curious, Inspiring).</li>
 </ul>
-<p><strong>Mitigation Strategies:</strong></p>
+<h3 id="comparison-with-non-scenario-based-auditing">Comparison with
+Non-Scenario-Based Auditing</h3>
 <ul>
-<li>Data filtering and sanitization.</li>
-<li>Backdoor detection tools.</li>
-<li>Fine-pruning of suspicious neurons.</li>
-<li>Model auditing and red-teaming.</li>
+<li>Without scenario: more diverse roles (e.g., Software Engineer, Human
+Rights Lawyer).</li>
+<li>With scenario: more biased and stereotypical assignments.</li>
+<li>Demonstrates that scenarios help bypass LLM safeguards and reveal
+deeper biases.</li>
 </ul>
-<hr />
-<h2 id="data-poisoning-attacks">4. Data Poisoning Attacks</h2>
+<h2 id="conclusion">6. Conclusion</h2>
 <ul>
-<li>Malicious data injected into training set → alters model
-behavior.</li>
-<li>More subtle than backdoors (don’t need triggers).</li>
+<li>Scenario-based auditing is effective for uncovering hidden biases in
+LLMs.</li>
+<li>Method is generalizable to other domains (e.g., education,
+hiring).</li>
+<li>Future work: expand scenarios, include more demographic factors,
+test other LLMs.</li>
 </ul>
-<p><strong>Types:</strong></p>
+<h2 id="acknowledgments">7. Acknowledgments</h2>
 <ul>
-<li><strong>Availability attacks</strong>: reduce overall accuracy.</li>
-<li><strong>Integrity attacks</strong>: force incorrect outputs for
-specific inputs.</li>
-<li><strong>Targeted poisoning</strong>: attacker manipulates particular
-examples.</li>
+<li>Funded by the Department of Defense under Contract
+No. FA8702-15-D-0002.</li>
+<li>Approved for public release and unlimited distribution.</li>
 </ul>
-<p><strong>Example:</strong></p>
+<h2 id="references-selected">References (Selected)</h2>
 <ul>
-<li>Poisoning an LLM’s medical dataset → biased or dangerous
-recommendations.</li>
+<li>[3] Deshpande et al.: Using personas to bypass toxicity
+safeguards.</li>
+<li>[7] Name-based auditing for bias.</li>
+<li>[16] Park et al.: Generative agents and role-playing.</li>
+<li>[17] Rottger et al.: Xstest for exaggerated safety behaviors.</li>
+<li>[23] Vedanda et al.: Algorithmic hiring bias in ChatGPT.</li>
 </ul>
-<p><strong>Mitigation:</strong></p>
-<ul>
-<li>Robust data curation pipelines.</li>
-<li>Anomaly detection on training data.</li>
-<li>Certified defenses (provable robustness).</li>
-</ul>
-<hr />
-<h2 id="defense-mechanisms">5. Defense Mechanisms</h2>
-<ul>
-<li><strong>Differential Privacy (DP):</strong> Limits leakage of
-individual data points.</li>
-<li><strong>Federated Learning + Secure Aggregation:</strong> Train
-collaboratively without exposing raw data.</li>
-<li><strong>Adversarial Training:</strong> Prepares model to resist
-privacy or poisoning attacks.</li>
-<li><strong>Monitoring &amp; Red-Teaming:</strong> Continuous auditing
-of deployed systems.</li>
-<li><strong>Certified Defenses:</strong> Formal guarantees against
-certain attacks.</li>
-</ul>
-<hr />
-<h2 id="future-directions">6. Future Directions</h2>
-<ul>
-<li><strong>Stronger privacy guarantees:</strong> Expand DP, formal
-frameworks for LLM-scale training.</li>
-<li><strong>Robust detection of backdoors/poisoning:</strong> Real-time
-monitoring tools.</li>
-<li><strong>Evaluation frameworks:</strong> Benchmarks across privacy,
-backdoor, poisoning threats.</li>
-<li><strong>Holistic security design:</strong> Integrating defenses
-across pipeline (data → training → deployment).</li>
-</ul>
-<hr />
-<h2 id="references">References</h2>
-<p>Extensive reference list covers:</p>
-<ul>
-<li>Privacy-preserving ML (differential privacy, federated
-learning).</li>
-<li>Membership inference &amp; model inversion studies.</li>
-<li>Backdoor/poisoning attacks in NLP &amp; CV.</li>
-<li>Defense evaluations and certified methods.</li>
-</ul>
-<hr />
