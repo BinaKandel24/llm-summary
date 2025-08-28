@@ -1,0 +1,562 @@
+<hr />
+<h1
+id="from-prompt-injections-to-protocol-exploits-threats-in-llm-powered-ai-agents-workflows">From
+Prompt Injections to Protocol Exploits: Threats in LLM-Powered AI Agents
+Workflows</h1>
+<p>Mohamed Amine Ferrag, Norbert Tihanyi, Djallel Hamouda, Leandros
+Maglaras, Merouane Debbah</p>
+<h2 id="abstract">Abstract</h2>
+<p>Autonomous AI agents powered by large language models (LLMs) with
+structured function-calling interfaces have dramatically expanded
+capabilities for real-time data retrieval, complex computation, and
+multi-step orchestration. The rapid growth of plugins, connectors, and
+inter-agent protocols has outpaced discovery mechanisms and security
+practices, resulting in brittle and vulnerable integrations. This survey
+introduces the first unified, end-to-end threat model for LLM-agent
+ecosystems spanning host-to-tool and agent-to-agent communications. It
+formalizes adversary capabilities and attacker objectives and catalogs
+over thirty attack techniques organized into four domains:</p>
+<ul>
+<li><strong>Input Manipulation:</strong> prompt injections, long-context
+hijacks, multimodal adversarial inputs<br />
+</li>
+<li><strong>Model Compromise:</strong> prompt- and parameter-level
+backdoors, composite and encrypted multi-backdoors, poisoning
+strategies<br />
+</li>
+<li><strong>System and Privacy Attacks:</strong> speculative
+side-channels, membership inference, retrieval poisoning,
+social-engineering simulations<br />
+</li>
+<li><strong>Protocol Vulnerabilities:</strong> exploits in MCP, ACP,
+ANP, and A2A protocols</li>
+</ul>
+<p>Each category includes representative scenarios, feasibility
+assessments, and defense evaluations. The paper identifies open
+challenges such as securing MCP with dynamic trust and cryptographic
+provenance, hardening agentic web interfaces, and resilience in
+multi-agent and federated environments. The work serves as a
+comprehensive reference to guide robust defenses and best practices for
+LLM-agent workflows.</p>
+<hr />
+<h2 id="i.-introduction">I. Introduction</h2>
+<h3
+id="how-do-mcp-anp-and-a2a-protocols-advance-autonomous-ai-agents">How
+do MCP, ANP, and A2A protocols advance autonomous AI agents?</h3>
+<ul>
+<li>Autonomous AI agents have rapidly progressed, driven by LLMs that
+perceive, reason, and act in complex environments.</li>
+<li>Structured function calling in 2023 enabled consistent external API
+invocation, facilitating real-time information fetching and multi-step
+workflows.</li>
+<li>Ecosystem growth includes ChatGPT plugins, LangChain, LlamaIndex
+connectors, and AI app stores with tools.</li>
+<li>Despite progress, tool integration is siloed, labor-intensive, and
+lacks a shared discovery mechanism, posing security risks.</li>
+<li>Model Context Protocol (MCP) adapts Language Server Protocol
+concepts for discovery-oriented, secure tool interaction.</li>
+<li>Agent Network Protocol (ANP) and Agent-to-Agent (A2A) protocols
+enhance peer-to-peer and multi-agent orchestration.</li>
+<li>Open-source MCP servers integrate with databases, version control,
+and 3D design suites, showcasing extensibility.</li>
+</ul>
+<h3 id="threat-model-overview">Threat Model Overview</h3>
+<ul>
+<li>Threat model grouped into four main categories: Input Manipulation,
+Model Compromise, System &amp; Privacy, Protocol Vulnerabilities.</li>
+<li>Attack success rates (ASR) in the wild are alarmingly high, e.g.,
+adaptive prompt injections &gt;50%, jailbreak &gt;90%, composite
+backdoors near 100%.</li>
+<li>Threats include untrusted inputs, compromised plugins, adversarial
+inter-agent attacks, and supply-chain manipulation.</li>
+<li>Research is fragmented; this survey unifies threat taxonomy and
+presents defenses and research needs.</li>
+</ul>
+<hr />
+<h2 id="ii.-related-surveys">II. Related Surveys</h2>
+<h3 id="a.-communication-protocols-and-frameworks">A. Communication
+Protocols and Frameworks</h3>
+<ul>
+<li>Yang et al. (2025) survey communication protocols for LLM agents,
+emphasizing context-oriented vs inter-agent schemes and highlighting
+gaps in attack vector coverage.</li>
+<li>Hou et al. (2025) analyze MCP lifecycle, architecture, and security
+concerns with focus on industry adoption, lacking protocol abuse
+exploration.</li>
+<li>Deng et al. (2025) examine AI agent security challenges but do not
+focus on communication layers.</li>
+<li>Wang et al. (2025) offer full-stack LLM safety overview, missing
+agent communication security.</li>
+<li>Yan et al. (2025) explore LLM-powered multi-agent system
+communication strategies, with limited security emphasis.</li>
+<li>Chen et al. (2025) survey Computer-Using Agents (CUAs), focusing on
+GUI threats rather than multi-agent protocols.</li>
+<li>Ferrag et al. (2025) provide benchmarks and frameworks for LLM
+agents, including protocols ACP, MCP, A2A but no vulnerability deep
+dive.</li>
+<li>Friha et al. (2024) analyze LLM integration with edge intelligence,
+covering edge vulnerabilities but not agent communication.</li>
+<li>Ferrag et al. (2025) examine LLMs in cybersecurity workflows with
+vulnerabilities focus but omitting agent communication threats.</li>
+</ul>
+<h3 id="b.-security-challenges-and-threat-models">B. Security Challenges
+and Threat Models</h3>
+<ul>
+<li>A number of recent works highlight conceptual and technical
+vulnerabilities in input handling, execution, environment, and
+interaction layers of LLM AI agents.</li>
+</ul>
+<h3 id="c.-llms-in-multi-agent-and-interactive-systems">C. LLMs in
+Multi-Agent and Interactive Systems</h3>
+<ul>
+<li>Yan et al. (2025) survey communication and coordination in LLM-based
+multi-agent systems, addressing scalability and security
+challenges.</li>
+</ul>
+<h3 id="d.-applications-and-benchmarking-of-llm-agents">D. Applications
+and Benchmarking of LLM Agents</h3>
+<ul>
+<li>Ferrag et al. (2025) analyze benchmarks across a variety of domains
+and evaluate agent frameworks with a focus on toolkits, communication
+protocols, reasoning, and security.</li>
+</ul>
+<h3 id="e.-edge-intelligence-and-llm-integration">E. Edge Intelligence
+and LLM Integration</h3>
+<ul>
+<li>Friha et al. (2024) focus on architectures, optimizations, and
+security aspects of integrating LLMs with decentralized edge
+devices.</li>
+</ul>
+<h3 id="f.-llms-for-cybersecurity-applications">F. LLMs for
+Cybersecurity Applications</h3>
+<ul>
+<li>Ferrag et al. (2025) survey the impact of generative AI and LLMs on
+cybersecurity, including vulnerabilities like prompt injection,
+poisoning, adversarial use, defenses, and emerging techniques.</li>
+</ul>
+<h3 id="g.-comparison-with-existing-surveys">G. Comparison with Existing
+Surveys</h3>
+<ul>
+<li>Existing works have addressed communication protocols, agent
+architectures, or general LLM safety but have not comprehensively
+covered the vulnerabilities and attack techniques in LLM agent
+communications, which this survey addresses.</li>
+</ul>
+<hr />
+<h2 id="iii.-input-manipulation-attacks">III. Input Manipulation
+Attacks</h2>
+<h3 id="types-and-taxonomy-fig.-3">Types and Taxonomy (Fig. 3)</h3>
+<ul>
+<li><strong>Prompt-Based Attacks:</strong> direct prompt injections,
+prompt-to-SQL injections, indirect/compositional injections</li>
+<li><strong>Jailbreaking Attacks:</strong> compositional instruction
+attack, in-context demonstrations, long-context jailbreaks, automated
+jailbreak generation</li>
+<li><strong>Adversarial &amp; Evasion Attacks:</strong> adversarial
+in-context learning, query-free attacks, multimodal attacks, active
+environment injection, context manipulations</li>
+</ul>
+<h3 id="details">Details</h3>
+<h4 id="a.-prompt-based-attacks">A. Prompt-Based Attacks</h4>
+<ol type="1">
+<li><p><strong>Direct Prompt Injection:</strong><br />
+Adversarial crafted inputs can hijack model goals or leak prompts.
+Example: A malicious input forcing the model to express dislike for
+humans or reveal internal prompt instructions (Fig. 4). Even low-skill
+attackers can cause misalignment .</p></li>
+<li><p><strong>Prompt-to-SQL Injection:</strong><br />
+Unsanitized prompts converted to SQL queries in Langchain-based apps
+risk SQL injection attacks that can corrupt database integrity. Defense
+involves input sanitization, query validation .</p></li>
+<li><p><strong>Indirect &amp; Compositional Prompt
+Injection:</strong><br />
+Adversarial perturbations embedded in images or sound can steer outputs
+in multimodal LLMs (e.g., LLaVA, PandaGPT) without altering textual
+input .</p></li>
+<li><p><strong>Adaptive Indirect Prompt Injection:</strong><br />
+Adaptive attacks bypass eight tested defenses with &gt;50% success,
+exposing vulnerabilities in tools that interact with external services
+.</p></li>
+<li><p><strong>Toxic Agent Flow Attack:</strong><br />
+Malicious GitHub issues in MCP integrations can hijack agents and leak
+private data (Fig. 5). Defenses include granular permission controls and
+continuous monitoring.</p></li>
+</ol>
+<h4 id="b.-jailbreaking-attacks">B. Jailbreaking Attacks</h4>
+<ul>
+<li>Aim to bypass alignment and safety to generate harmful outputs.</li>
+<li>Techniques include compositional instruction attacks (CIA) with
+&gt;95% success reduced by intent-based defenses , in-context
+demonstration attack (ICA) mitigated by refusal example defenses ,
+cross-modality jailbreaks targeting vision-language models ,
+long-context jailbreak attacks that scale with demonstration size ,
+automated jailbreak generation with genetic algorithms (AutoDAN) ,
+jailbreak fuzzing frameworks with high success across LLMs (GPTFuzz) ,
+and optimized stealthy generation of jailbreak prompts (GAP,
+PromptGuard) .</li>
+</ul>
+<h4 id="c.-adversarial-example-evasion-attacks">C. Adversarial Example
+&amp; Evasion Attacks</h4>
+<ul>
+<li>Adversarial in-context learning (advICL) corrupts demonstration sets
+to mislead LLMs .</li>
+<li>Query-free adversarial attacks manipulate text embeddings to subtly
+alter content generated by T2I models like Stable Diffusion .</li>
+<li>Multimodal adversarial attacks bypass NSFW detection by combining
+text and image perturbations .</li>
+<li>Active environment injection attacks exploit MLLM agents’ interfaces
+and reasoning gaps to manipulate outputs at up to 93% success .</li>
+<li>Context manipulation attacks can hijack Web3 AI agents through
+unprotected input/data channels .</li>
+</ul>
+<hr />
+<h2 id="iv.-model-compromise-attacks">IV. Model Compromise Attacks</h2>
+<h3 id="taxonomy-fig.-8">Taxonomy (Fig. 8)</h3>
+<ul>
+<li><strong>Backdoor Attacks:</strong> prompt-level, model-parameter,
+composite, encrypted multi-backdoors.</li>
+<li><strong>Data-Poisoning:</strong> medical misinformation, retrieval
+poisoning, gradient-based poisoning, federated learning model
+poisoning.</li>
+<li><strong>Memory-Poisoning:</strong> injection attacks on agent memory
+banks.</li>
+</ul>
+<h3 id="highlights">Highlights</h3>
+<h4 id="a.-backdoor-attacks">A. Backdoor Attacks</h4>
+<ul>
+<li>Backdoor triggers can embed in user inputs or intermediate agent
+outputs (Fig. 7).</li>
+<li><strong>Prompt-Level Backdoors:</strong> BadPrompt generates subtle
+triggers in continuous prompt-learning models .</li>
+<li><strong>Prompt-Based Backdoors:</strong> PoisonPrompt compromises
+hard and soft prompts, stressing the risk in Prompt-as-a-Service
+pipelines .</li>
+<li><strong>Model-Parameter Backdoors:</strong> BadAgent manipulates
+fine-tuned agent models with external tools, evading detection even
+after retraining .</li>
+<li><strong>Composite Backdoor Attack (CBA):</strong> Backdoor requires
+multiple trigger keys simultaneously; achieves near-perfect success with
+low poisoning .</li>
+<li><strong>Encrypted Multi-Backdoor Implantation:</strong> DemonAgent
+uses dynamic encryption to conceal backdoors in LLM agents .</li>
+</ul>
+<h4 id="b.-data-poisoning-memory-poisoning">B. Data-Poisoning &amp;
+Memory Poisoning</h4>
+<ul>
+<li>Medical misinformation poisoning shows a tiny fraction of corrupted
+data can significantly increase harmful outputs—detectable by
+knowledge-graph screening .</li>
+<li>Retrieval poisoning (PoisonedRAG) corrupts external knowledge in RAG
+systems, achieving up to 90% ASR; existing defenses are inadequate
+.</li>
+<li>Gradient-based backdoor poisoning stealthily poisons training data
+to flip model predictions with minimal examples (Fig. 10) .</li>
+<li>Federated learning local model poisoning undermines Byzantine-robust
+methods, degrading overall system accuracy .</li>
+<li>Memory poisoning (MINJA) injects harmful records into memory banks
+covertly via queries, leading to malicious reasoning and responses (Fig.
+11) .</li>
+</ul>
+<hr />
+<h2 id="v.-system-privacy-attacks">V. System &amp; Privacy Attacks</h2>
+<h3 id="categories-taxonomy-fig.-12">Categories &amp; Taxonomy (Fig.
+12)</h3>
+<ul>
+<li>Extraction &amp; Privacy: side-channel, membership inference,
+datastore leakage.</li>
+<li>Federated &amp; Multi-Agent: recursive blocking (Corba), federated
+attacks.</li>
+<li>Social-Engineering &amp; Data-Extraction: simulations of attacks
+against conversational agents.</li>
+</ul>
+<h3 id="details-1">Details</h3>
+<h4 id="a.-extraction-privacy-attacks">A. Extraction &amp; Privacy
+Attacks</h4>
+<ul>
+<li><strong>Speculative Decoding Side-Channel Attack:</strong> Network
+packet timing reveals sensitive token info from LLM services .</li>
+<li><strong>Membership Inference Attack (S2MIA):</strong> Semantic
+similarity used to infer membership in retrieval databases, bypassing
+defenses (Fig. 13) .</li>
+<li><strong>Datastore Leakage Attack:</strong> Adversaries extract
+verbatim data from RAG datastore via prompt injections with high success
+rates .</li>
+</ul>
+<h4 id="b.-federated-multi-agent-attacks">B. Federated &amp; Multi-Agent
+Attacks</h4>
+<ul>
+<li><strong>Contagious Recursive Blocking Attack (Corba):</strong>
+Subtle benign instructions propagate denial-of-service across LLM
+multi-agent systems .</li>
+<li><strong>Federated LLM Attack Benchmark (FedSecurity):</strong>
+Enables simulation of attacks and defenses in federated LLM training
+.</li>
+</ul>
+<h4 id="c.-social-engineering-data-extraction">C. Social-Engineering
+&amp; Data-Extraction</h4>
+<ul>
+<li><strong>Personalized Social Engineering Simulation
+(SE-VSim):</strong> Models victim personality traits to simulate and
+detect multi-turn social engineering in chatbot agents .</li>
+</ul>
+<hr />
+<h2 id="vi.-vulnerabilities-attacks-in-mcp-and-a2a-protocols">VI.
+Vulnerabilities &amp; Attacks in MCP and A2A Protocols</h2>
+<h3 id="mcp-overview">MCP Overview</h3>
+<ul>
+<li>MCP enables agents to dynamically augment context via secure,
+standardized communication with data sources and APIs.</li>
+<li>Despite benefits, MCP opens attack vectors (Fig. 14), including
+prompt injections, backdoors, fuzzing, data poisoning, privacy
+extraction, replay, DoS, credential theft.</li>
+</ul>
+<h3 id="a2a-protocol-overview">A2A Protocol Overview</h3>
+<ul>
+<li>Facilitates horizontal, secure task delegation between multiple
+agents via JSON-RPC-over-HTTP and Server-Sent Events.</li>
+<li>Vulnerabilities include cross-agent prompt injections, discovery
+spoofing, rogue registration, adaptive injections, context manipulation,
+recursive blocking, memory subversion.</li>
+</ul>
+<h3 id="security-threat-matrix-table-vi">Security Threat Matrix (Table
+VI)</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 15%" />
+<col style="width: 30%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th>Attack Category</th>
+<th>Protocol(s)</th>
+<th>Impact</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prompt Injection</td>
+<td>MCP, A2A, ANP, ACP</td>
+<td>Unauthorized tool calls, data leaks</td>
+<td>Input sanitization, prompt/schema validation</td>
+</tr>
+<tr>
+<td>Supply Chain &amp; Metadata Poisoning</td>
+<td>MCP, A2A, ANP, ACP</td>
+<td>Toolchain compromise</td>
+<td>Code signing, integrity monitoring</td>
+</tr>
+<tr>
+<td>Token Theft &amp; Replay</td>
+<td>MCP, A2A, ANP, ACP</td>
+<td>Agent takeover, impersonation</td>
+<td>Short-lived tokens, nonce checks, mTLS</td>
+</tr>
+<tr>
+<td>Man-in-the-Middle</td>
+<td>MCP, A2A, ANP, ACP</td>
+<td>Data theft, tampering</td>
+<td>Mutual TLS, end-to-end encryption</td>
+</tr>
+<tr>
+<td>Replay Attack</td>
+<td>MCP, A2A, ANP, ACP</td>
+<td>Unauthorized duplicate actions</td>
+<td>Nonce/timestamp enforcement, unique IDs</td>
+</tr>
+<tr>
+<td>Denial-of-Service</td>
+<td>MCP, A2A, ANP, ACP</td>
+<td>Service disruption</td>
+<td>Rate limiting, circuit breakers</td>
+</tr>
+<tr>
+<td>Insecure Configuration</td>
+<td>MCP, A2A, ANP, ACP</td>
+<td>Unauthorized access</td>
+<td>Secure defaults, audits, least privilege</td>
+</tr>
+<tr>
+<td>Agent Discovery Spoofing</td>
+<td>A2A, ANP</td>
+<td>Workflow hijacking</td>
+<td>Signed and authenticated discovery</td>
+</tr>
+<tr>
+<td>Rogue Agent Registration</td>
+<td>A2A, ANP</td>
+<td>Malicious task execution</td>
+<td>Agent whitelisting, onboarding policies</td>
+</tr>
+<tr>
+<td>Peer Discovery Poisoning</td>
+<td>ANP</td>
+<td>Malicious peer injection</td>
+<td>Trust anchors, mutual authentication</td>
+</tr>
+<tr>
+<td>Schema Poisoning</td>
+<td>ACP</td>
+<td>Validation bypass, rogue schema</td>
+<td>Schema signing, strict enforcement</td>
+</tr>
+<tr>
+<td>Capability Escalation Abuse</td>
+<td>ANP, ACP</td>
+<td>Privilege escalation</td>
+<td>Fine-grained ACLs, runtime auth checks</td>
+</tr>
+<tr>
+<td>Credential Theft Proxy Abuse</td>
+<td>MCP, ANP, ACP</td>
+<td>Unauthorized API calls</td>
+<td>Token binding, explicit delegation checks</td>
+</tr>
+<tr>
+<td>Cross-Agent Prompt Injection</td>
+<td>A2A, ANP</td>
+<td>Cascading malicious actions</td>
+<td>Input isolation, per-agent validation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="vii.-open-challenges-and-future-directions">VII. Open Challenges
+and Future Directions</h2>
+<h3 id="a.-mcp-protocol-vulnerabilities">A. MCP Protocol
+Vulnerabilities</h3>
+<ul>
+<li>Demand for dynamic trust and adaptive policy enforcement beyond
+static access control.</li>
+<li>Suggested development of declarative policy languages and
+distributed trust-negotiation protocols.</li>
+<li>Need for context integrity, provenance tracking via secure enclaves,
+cryptographic audit logs, blockchains.</li>
+<li>Threat of ransomware disrupting MCP connections; defense via secure
+architecture.</li>
+<li>Urgent need for anomaly detection tailored to natural language
+payloads and formal protocol verification.</li>
+</ul>
+<h3 id="b.-agentic-web-interfaces-awi">B. Agentic Web Interfaces
+(AWI)</h3>
+<ul>
+<li>AWI enables agent-optimized, standardized web interfaces for
+efficient AI interaction and automation.</li>
+<li>Challenges include potential vulnerabilities to unauthorized access,
+manipulation, phishing, and DoS attacks.</li>
+<li>Proposed defensive research includes authentication, integrity
+verification, anomaly detection, adversarial robustness testing, and
+formal verification.</li>
+</ul>
+<h3 id="c.-optimizing-llm-multi-agent-systems">C. Optimizing LLM
+Multi-Agent Systems</h3>
+<ul>
+<li>MASS framework automates prompt and topology optimization for
+multi-agent collaboration.</li>
+<li>Complexities introduce risks of unpredictable behaviors and
+adversarial manipulation.</li>
+<li>Need for security constraints integration, verification techniques,
+resilient topologies, and real-time monitoring.</li>
+</ul>
+<h3 id="d.-vision-language-model-vlm-powered-web-agents">D.
+Vision-Language Model (VLM) Powered Web Agents</h3>
+<ul>
+<li>Surfer-H with Holo1 VLM demonstrates cost-efficient, accurate web
+navigation AI.</li>
+<li>Security concerns include interface manipulation, adversarial
+inputs, misuse for scraping/phishing, and biased agent-generated
+training data.</li>
+<li>Calls for robustness enhancement, secure deployment practices,
+explainability, and anomaly detection.</li>
+</ul>
+<h3 id="e.-memory-centric-llms-and-security-risks">E. Memory-Centric
+LLMs and Security Risks</h3>
+<ul>
+<li>Mem0 architecture improves long-term dialogue consistency with
+scalable memory but introduces data poisoning, unauthorized inference,
+and leakage risks.</li>
+<li>Future work on memory pipeline security, tamper resistance,
+monitoring, privacy-preserving, adversarial robustness, and formal
+verification.</li>
+</ul>
+<h3 id="f.-evolutionary-coding-agents">F. Evolutionary Coding
+Agents</h3>
+<ul>
+<li>AlphaEvolve autonomously evolves code to solve scientific problems,
+with potential risks of backdoors, unsafe code generation, and attack
+amplification over generations.</li>
+<li>Research needed on secure evaluation, formal code verification,
+access controls, real-time monitoring, and secure coding standards.</li>
+</ul>
+<h3 id="g.-defense-mechanism-robustness-and-scalability">G. Defense
+Mechanism Robustness and Scalability</h3>
+<ul>
+<li>Static rules and heuristics insufficient against adaptive,
+multi-modal attacks.</li>
+<li>Advocates for modality-agnostic, scalable frameworks with formal
+guarantees, adversarial training, continuous red-teaming, formal
+verification, cross-model evaluation, and expansive benchmarks.</li>
+</ul>
+<h3 id="h.-securing-model-parameters-and-memory-integrity">H. Securing
+Model Parameters and Memory Integrity</h3>
+<ul>
+<li>Persistent backdoor and poisoning attacks require pipeline auditing
+and runtime integrity verification.</li>
+<li>Approaches include cryptographic attestation of training and
+prompts, differential privacy, canary triggers, transparent memory
+inspection, and rollback capabilities.</li>
+</ul>
+<h3 id="i.-resilience-in-multi-agent-and-federated-environments">I.
+Resilience in Multi-Agent and Federated Environments</h3>
+<ul>
+<li>Protocols and federated learning expose risks of context
+manipulation, recursive blocking, poisoning, side-channel, membership
+inference, and social engineering.</li>
+<li>Proposes secure communication, cross-agent attestation, blockchain
+audit trails, multi-party computation, threshold cryptography, and
+differential privacy for robustness.</li>
+</ul>
+<hr />
+<h2 id="viii.-conclusion">VIII. Conclusion</h2>
+<ul>
+<li>Presented the first unified, end-to-end threat model for LLM-powered
+AI agent ecosystems covering host-tool and agent-to-agent
+communications.</li>
+<li>Cataloged over 30 attack techniques across Input Manipulation, Model
+Compromise, System &amp; Privacy, and Protocol Vulnerabilities.</li>
+<li>Identified gaps and research directions in dynamic trust, agentic
+web interfaces, multi-agent robustness, memory security, secure coding
+agents, scalable defenses, integrity verification, and federated system
+resilience.</li>
+<li>The work guides future research and practical development for
+secure, trustworthy autonomous AI agents.</li>
+</ul>
+<hr />
+<h2 id="key-tables-and-figures">Key Tables and Figures</h2>
+<ul>
+<li><strong>Table I:</strong> Attack Success Rates (ASR) for various
+attacks, indicating high success of many prompt injection, backdoor, and
+jailbreak techniques.</li>
+<li><strong>Table II:</strong> Comparative overview of related surveys
+on LLMs, agents, and security, showing the unique contributions of this
+survey in protocol- and attack-focused analysis.</li>
+<li><strong>Table III:</strong> Summary of research works on input
+manipulation attacks—attack categories, targets, defenses, and key
+findings.</li>
+<li><strong>Table IV:</strong> Summary of research on model compromise
+attacks—attack types, defenses, targeted models, and key outcomes.</li>
+<li><strong>Table V:</strong> Summary of system and privacy attacks,
+focusing on extraction, federated/multi-agent, social-engineering, and
+protocol-level threats.</li>
+<li><strong>Table VI:</strong> Comprehensive security threat matrix
+illustrating attack categories, protocols affected, impacts, and
+suggested mitigations.</li>
+<li><strong>Figures 1–15:</strong> Include survey structure, threat
+taxonomies, workflow examples for attacks like prompt injections and
+backdoors, automated jailbreak prompt generation processes (Fig. 6),
+memory poisoning workflows (Fig. 11), and MCP SDK injection
+vulnerabilities (Fig. 15).</li>
+</ul>
+<hr />
